@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Define the URL
+from curses import echo
+
+
+URL="http://www.amfiindia.com/spages/NAVAll.txt"
+
+# Define the output TSV file
+OUTPUT_FILE="amfi_data.tsv"
+
+# Use curl to download the data from the URL, grep to filter the lines containing the desired fields,
+# and cut to extract the Scheme Name and Asset Value fields, and tr to replace semicolons with tabs.
+curl -s "$URL" | grep -E '^[0-9]{6};' | cut -d ';' -f 4,6 | tr ';' '\t' > "$OUTPUT_FILE"
+
+echo "Data extraction complete. Results saved in $OUTPUT_FILE."
